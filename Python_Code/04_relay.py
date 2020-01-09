@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+#-----------------------------------------------------------
+# File name     : 04_Relay.py
+# Description   : toggle a relay.
+# Company       : SunRobotics Technologies
+# Website       : www.sunrobotics.co.in
+# E-mail        : support@sunrobotics.co.in(For Any Query)
+#-----------------------------------------------------------
+import RPi.GPIO as GPIO
+import time
+
+RelayPin = 12    # pin12
+
+def setup():
+	GPIO.setmode(GPIO.BOARD)         # Numbers pins by physical location
+	GPIO.setup(RelayPin, GPIO.OUT)   # Set pin mode as output
+	GPIO.output(RelayPin, GPIO.HIGH)
+
+def loop():
+	while True:
+		print '...clsoe'
+		GPIO.output(RelayPin, GPIO.LOW)
+		time.sleep(0.5)
+		print 'open...'
+		GPIO.output(RelayPin, GPIO.HIGH)
+		time.sleep(0.5)
+
+def destroy():
+	GPIO.output(RelayPin, GPIO.HIGH)
+	GPIO.cleanup()                     # Release resource
+
+if __name__ == '__main__':     # Program start from here
+	setup()
+	try:
+		loop()
+	except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
+		destroy()
+
